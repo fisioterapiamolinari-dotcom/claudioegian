@@ -4,372 +4,59 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Stand-Up &amp; Improv – Gianmarco e Claudio, Roma</title>
-<meta name="description" content="Serate di stand-up e improvvisazione a Roma con Gianmarco Molinari e Claudio Riolino. Iscriviti al prossimo evento.">
+<meta name="description" content="Serate di stand-up e improvvisazione a Roma con Gianmarco Molinari e Claudio Riolino.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Karla:wght@700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --velluto: #7a1217;
-    --velluto-scuro: #3b0a0d;
     --palco: #1c0d0e;
     --ottone: #e0a83e;
-    --crema: #f6ecdf;
-    --crema-spenta: #cdbba8;
-    --raggio: 10px;
-    --titolo: "Abril Fatface", "Rockwell", Georgia, serif;
     --testo: "Karla", system-ui, -apple-system, "Segoe UI", sans-serif;
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
   body {
     margin: 0;
     background: var(--palco);
-    color: var(--crema);
     font-family: var(--testo);
-    font-size: 1.05rem;
-    line-height: 1.6;
   }
-  /* Sfondo: la locandina, fissa dietro a tutto, con un velo scuro per far leggere i testi */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
+  /* La locandina riempie la pagina; sotto c'è solo il pulsante */
+  .pagina {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 2rem 1.25rem calc(2.5rem + env(safe-area-inset-bottom, 0px));
     background:
-      linear-gradient(180deg, rgba(28, 13, 14, .78) 0%, rgba(28, 13, 14, .88) 100%),
+      linear-gradient(180deg, rgba(28, 13, 14, 0) 0%, rgba(28, 13, 14, 0) 60%, rgba(28, 13, 14, .8) 100%),
       url("copertina.jpg") center top / cover no-repeat;
   }
-  a { color: inherit; }
-  :focus-visible { outline: 3px solid var(--ottone); outline-offset: 3px; }
-
-  .wrap { width: min(1040px, 100% - 2.5rem); margin-inline: auto; }
-
-  /* ---------- HERO ---------- */
-  .hero {
-    position: relative;
-    overflow: hidden;
-    background: radial-gradient(ellipse 38% 70% at 78% 8%, rgba(255, 226, 160, .22), transparent 70%);
-    padding: clamp(3.5rem, 9vw, 7rem) 0 clamp(4rem, 9vw, 7rem);
-  }
-  .hero .wrap {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 2rem;
-    align-items: center;
-  }
-  .hero h1 {
-    font-family: var(--titolo);
-    font-weight: 400;
-    font-size: clamp(3rem, 9.5vw, 6.6rem);
-    line-height: .95;
-    margin: 0 0 1.4rem;
-    letter-spacing: -.01em;
-    text-shadow: 0 4px 24px rgba(0, 0, 0, .45);
-  }
-  .hero h1 span { display: block; color: var(--ottone); }
-  .hero p.sotto {
-    max-width: 30rem;
-    margin: 0 0 2rem;
-    font-size: 1.2rem;
-    color: var(--crema);
-  }
-  .microfono { justify-self: center; width: min(250px, 60%); filter: drop-shadow(0 18px 30px rgba(0, 0, 0, .6)); }
-  .microfono svg { display: block; width: 100%; height: auto; }
-
   .bottone {
     display: inline-block;
-    padding: .8rem 1.6rem;
+    max-width: 24rem;
+    padding: 1rem 2rem;
     background: var(--ottone);
     color: var(--palco);
     font-weight: 700;
+    font-size: 1.15rem;
+    line-height: 1.3;
+    text-align: center;
     text-decoration: none;
     border-radius: 999px;
-    border: 0;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 1rem;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .5);
     transition: transform .15s ease, background .15s ease;
   }
   .bottone:hover { background: #f0be5c; transform: translateY(-2px); }
-  .azioni { display: flex; flex-wrap: wrap; gap: .8rem; }
-  .bottone.secondario {
-    background: transparent;
-    color: var(--crema);
-    border: 2px solid var(--ottone);
-    padding: calc(.8rem - 2px) calc(1.6rem - 2px);
-  }
-  .bottone.secondario:hover { background: rgba(224, 168, 62, .18); }
-
-  /* Unico momento animato: il faro si accende */
-  @keyframes accendi {
-    0% { opacity: 0; }
-    35% { opacity: .2; }
-    45% { opacity: 0; }
-    60% { opacity: .8; }
-    100% { opacity: 1; }
-  }
-  .hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 22% 48% at 78% 28%, rgba(255, 240, 200, .22), transparent 70%);
-    pointer-events: none;
-    animation: accendi 1.6s ease-out both;
-  }
-
-  /* ---------- SEZIONI ---------- */
-  section { padding: clamp(3rem, 7vw, 5rem) 0; }
-  h2 {
-    font-family: var(--titolo);
-    font-weight: 400;
-    font-size: clamp(2rem, 5vw, 3rem);
-    line-height: 1.05;
-    margin: 0 0 1.5rem;
-  }
-
-  /* Come funziona: due tempi + durata */
-  .serata { background: rgba(59, 10, 13, .82); }
-  .tempi {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-    margin-top: 2rem;
-  }
-  .tempo {
-    padding: 1.5rem;
-    border: 2px solid var(--ottone);
-    border-radius: var(--raggio);
-  }
-  .tempo h3 {
-    font-family: var(--titolo);
-    font-weight: 400;
-    font-size: 1.7rem;
-    margin: 0 0 .4rem;
-    color: var(--ottone);
-  }
-  .tempo p { margin: 0; color: var(--crema); }
-  .serata .nota { margin-top: 1.5rem; color: var(--crema-spenta); max-width: 38rem; }
-
-  /* Eventi: righe a biglietto */
-  .lista { display: grid; gap: 1rem; }
-  .evento {
-    display: grid;
-    grid-template-columns: 9rem 1fr auto;
-    gap: 1.5rem;
-    align-items: center;
-    padding: 1.4rem 1.6rem;
-    background: var(--velluto);
-    border-radius: var(--raggio);
-    border-left: 8px solid var(--ottone);
-  }
-  .evento .quando {
-    font-family: var(--titolo);
-    font-size: 1.5rem;
-    line-height: 1.1;
-  }
-  .evento .quando small {
-    display: block;
-    margin-top: .3rem;
-    font-family: var(--testo);
-    font-size: .95rem;
-    color: var(--crema-spenta);
-  }
-  .evento h3 { margin: 0 0 .25rem; font-size: 1.25rem; }
-  .evento .dove { margin: 0; color: var(--crema); }
-  .evento .regole { margin: .35rem 0 0; color: var(--crema-spenta); font-size: .95rem; }
-  .evento .azione { text-align: right; }
-  .prezzo {
-    display: block;
-    margin-bottom: .6rem;
-    font-weight: 700;
-    color: var(--ottone);
-  }
-  .vuoto {
-    padding: 2rem;
-    border: 2px dashed var(--crema-spenta);
-    border-radius: var(--raggio);
-    color: var(--crema-spenta);
-  }
-
-  /* Chi siamo */
-  .noi { background: rgba(59, 10, 13, .82); }
-  .noi p { max-width: 36rem; margin: 0 0 1rem; }
-
-  footer {
-    padding: 2rem 0 3rem;
-    color: var(--crema-spenta);
-    font-size: .95rem;
-  }
-
-  /* ---------- MOBILE ---------- */
-  @media (max-width: 760px) {
-    .hero .wrap { grid-template-columns: 1fr; }
-    .microfono { order: -1; width: 130px; justify-self: start; }
-    .tempi { grid-template-columns: 1fr; }
-    .evento { grid-template-columns: 1fr; gap: .9rem; }
-    .evento .azione { text-align: left; }
-    .evento .azione .bottone { display: block; text-align: center; }
-  }
+  .bottone:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
   @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    .hero::after { animation: none; }
     .bottone { transition: none; }
   }
 </style>
 </head>
 <body>
-
-<header class="hero">
-  <div class="wrap">
-    <div>
-      <h1>Stand-up<span>&amp; improv</span></h1>
-      <p class="sotto">Prima ci prendiamo il microfono noi. Poi ve lo prendete voi (con le vostre idee, non con le mani). Serate a Roma, risate di qualità variabile ma sempre sincere.</p>
-      <div class="azioni">
-        <a class="bottone" href="#eventi">Vedi le prossime date</a>
-        <a class="bottone secondario" href="qr-code.html">Se ti piace il nostro spettacolo clicca qui</a>
-      </div>
-    </div>
-    <div class="microfono" aria-hidden="true">
-      <svg viewBox="0 0 200 420" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="metallo" x1="0" x2="1">
-            <stop offset="0" stop-color="#7f7f86"/>
-            <stop offset=".35" stop-color="#f1f1f4"/>
-            <stop offset=".7" stop-color="#9c9ca4"/>
-            <stop offset="1" stop-color="#5d5d64"/>
-          </linearGradient>
-        </defs>
-        <rect x="94" y="215" width="12" height="190" rx="4" fill="url(#metallo)"/>
-        <ellipse cx="100" cy="408" rx="46" ry="8" fill="url(#metallo)"/>
-        <rect x="80" y="196" width="40" height="30" rx="6" fill="url(#metallo)"/>
-        <rect x="30" y="20" width="140" height="190" rx="70" fill="url(#metallo)" stroke="#3a3a40" stroke-width="3"/>
-        <g stroke="#2c2c32" stroke-width="3" stroke-linecap="round">
-          <line x1="44" y1="60" x2="156" y2="60"/>
-          <line x1="38" y1="85" x2="162" y2="85"/>
-          <line x1="36" y1="110" x2="164" y2="110"/>
-          <line x1="38" y1="135" x2="162" y2="135"/>
-          <line x1="44" y1="160" x2="156" y2="160"/>
-        </g>
-      </svg>
-    </div>
-  </div>
-</header>
-
-<section class="serata" id="serata">
-  <div class="wrap">
-    <h2>Come funziona la serata</h2>
-    <p>Dura circa un'ora e mezza. Il tempo di ridere, non di accorgervi che è tardi.</p>
-    <div class="tempi">
-      <div class="tempo">
-        <h3>Prima parte: stand-up</h3>
-        <p>Saliamo sul palco e facciamo stand-up. Tutto scritto prima, quindi se qualcosa non fa ridere era voluto.</p>
-      </div>
-      <div class="tempo">
-        <h3>Ultima parte: improv</h3>
-        <p>Qui non c'è copione, quindi se qualcosa non fa ridere è colpa del pubblico. Scherzo. Un po' no.</p>
-      </div>
-    </div>
-    <p class="nota">Le regole cambiano da evento a evento e da locale a locale: le trovi scritte nella scheda di ogni data.</p>
-  </div>
-</section>
-
-<section id="eventi">
-  <div class="wrap">
-    <h2>Prossimi eventi</h2>
-    <div class="lista" id="lista-eventi"></div>
-  </div>
-</section>
-
-<section class="noi" id="chi-siamo">
-  <div class="wrap">
-    <h2>Chi c'è sul palco</h2>
-    <p><strong>Gianmarco Molinari</strong> e <strong>Claudio Riolino</strong>. Facciamo eventi di stand-up e improv a Roma. Stand-up all'inizio, improvvisazione alla fine, in mezzo voi che ridete (o fate finta, noi apprezziamo comunque).</p>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">Stand-Up &amp; Improv · Roma</div>
-</footer>
-
-<script>
-  /* =====================================================
-     COSE DA MODIFICARE (le uniche, giuro)
-     ===================================================== */
-
-  // 1) Link al Google Form collegato al vostro Google Sheet.
-  //    Incollalo qui tra le virgolette.
-  var LINK_FORM = "";
-
-  // 2) Gli eventi. Copia un blocco { ... }, cambia i testi, salva.
-  //    - prezzo: scrivi "Gratis" oppure per esempio "10 €"
-  //    - pagamento: solo per eventi a pagamento (come si paga). Lascia "" se gratis.
-  //    - regole: le regole di quella serata/locale. Lascia "" se non servono.
-  //    - formUrl: facoltativo. Se un evento ha un suo form, mettilo qui; altrimenti usa LINK_FORM.
-  //    Finché la lista è vuota, il sito mostra "Coming soon...".
-  //    Quando hai una data vera, togli le due barre e riempi l'esempio qui sotto:
-  var EVENTI = [
-    // {
-    //   titolo: "Nome evento",
-    //   data: "Gio 22 ottobre",
-    //   ora: "Ore 20:00",
-    //   luogo: "Nome locale, Roma",
-    //   prezzo: "Gratis",
-    //   pagamento: "",
-    //   regole: "",
-    //   formUrl: ""
-    // }
-  ];
-
-  /* ===================================================== */
-
-  function el(tag, classe, testo) {
-    var e = document.createElement(tag);
-    if (classe) e.className = classe;
-    if (testo) e.textContent = testo;
-    return e;
-  }
-
-  var lista = document.getElementById("lista-eventi");
-
-  if (!EVENTI.length) {
-    lista.appendChild(el("div", "vuoto", "Coming soon..."));
-  }
-
-  EVENTI.forEach(function (ev) {
-    var card = el("article", "evento");
-
-    var quando = el("div", "quando", ev.data);
-    quando.appendChild(el("small", "", ev.ora));
-    card.appendChild(quando);
-
-    var info = el("div", "");
-    info.appendChild(el("h3", "", ev.titolo));
-    info.appendChild(el("p", "dove", ev.luogo));
-    if (ev.regole) info.appendChild(el("p", "regole", "Regole: " + ev.regole));
-    if (ev.pagamento) info.appendChild(el("p", "regole", ev.pagamento));
-    card.appendChild(info);
-
-    var azione = el("div", "azione");
-    azione.appendChild(el("span", "prezzo", ev.prezzo));
-    var link = el("a", "bottone", "Iscriviti");
-    var url = ev.formUrl || LINK_FORM;
-    if (url) {
-      link.href = url;
-      link.target = "_blank";
-      link.rel = "noopener";
-    } else {
-      link.href = "#eventi";
-      link.addEventListener("click", function (e) {
-        e.preventDefault();
-        alert("Manca il link al Google Form: inseriscilo in LINK_FORM dentro index.html.");
-      });
-    }
-    azione.appendChild(link);
-    card.appendChild(azione);
-
-    lista.appendChild(card);
-  });
-</script>
+  <main class="pagina">
+    <a class="bottone" href="https://fisioterapiamolinari-dotcom.github.io/claudioegian/qrcode.html">Se ti piacciono le nostre serate, clicca qui</a>
+  </main>
 </body>
 </html>
