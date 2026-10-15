@@ -114,6 +114,7 @@ input[aria-invalid=true] { border-color:var(--err); }
     </div>
     <div class="azioni">
       <button class="btn ghost" type="button" id="aggiorna">Aggiorna</button>
+      <button class="btn ghost" type="button" id="azzera">Azzera conto</button>
       <a class="btn ghost" id="apriFogli" target="_blank" rel="noopener">Apri Google Fogli</a>
     </div>
   </section>
@@ -132,13 +133,25 @@ input[aria-invalid=true] { border-color:var(--err); }
     // L'evento di questa pagina
     evento: "15 Ottobre",
     // Il tuo foglio
-    fogliUrl: "https://docs.google.com/spreadsheets/d/1v0zSIia5EeMW3fxB3Xo3KQdi2qrifOtkNT-VHy_vH4I/edit?gid=0#gid=0"
+    fogliUrl: "https://docs.google.com/spreadsheets/d/1v0zSIia5EeMW3fxB3Xo3KQdi2qrifOtkNT-VHy_vH4I/edit?gid=2016035704#gid=2016035704"
   };
   /* ======================================= */
 
   var $ = function (id) { return document.getElementById(id); };
   var rows = [], busy = 0, chain = Promise.resolve(), biglietti = 1, ospiti = [];
   var MAX = 20;
+
+  /* Conto tenuto anche qui, in questo browser: sale a ogni registrazione e non dipende dalla lettura del foglio.
+     Se il foglio ne ha di più (registrazioni fatte da altri dispositivi) vale il foglio. */
+  var CKEY = "sui_conto_" + CONFIG.evento;
+  var conto = { reg: 0, bigl: 0, bReg: 0, bBigl: 0 };
+  try { var salvato = JSON.parse(localStorage.getItem(CKEY) || "null"); if (salvato) conto = salvato; } catch (e) {}
+  function salvaConto() { try { localStorage.setItem(CKEY, JSON.stringify(conto)); } catch (e) {} }
+  function totaleFoglio() {
+    var reg = 0, bigl = 0;
+    rows.forEach(function (r) { if (r.evento === CONFIG.evento) { reg++; bigl += r.biglietti; } });
+    return { reg: reg, bigl: bigl };
+  }
 
   $("apriFogli").href = CONFIG.fogliUrl;
 
@@ -156,9 +169,9 @@ input[aria-invalid=true] { border-color:var(--err); }
 
   /* ---------- contatori ---------- */
   function conta() {
-    var reg = 0, bigl = 0;
-    rows.forEach(function (r) { if (r.evento === CONFIG.evento) { reg++; bigl += r.biglietti; } });
-    $("cReg").textContent = reg; $("cBigl").textContent = bigl;
+    var f = totaleFoglio();
+    $("cReg").textContent = Math.max(conto.reg, f.reg - conto.bReg);
+    $("cBigl").textContent = Math.max(conto.bigl, f.bigl - conto.bBigl);
   }
 
   /* ---------- rete ---------- */
@@ -231,7 +244,7 @@ input[aria-invalid=true] { border-color:var(--err); }
     $("errore").textContent = "";
     var altri = ospiti.map(function (o) { return (o.nome.trim() + " " + o.cognome.trim()).trim(); })
       .filter(function (s) { return s; }).join("; ");
-    rows.push({ evento: CONFIG.evento, biglietti: biglietti }); conta();
+    conto.reg++; conto.bigl += biglietti; salvaConto(); conta();
     send({ action: "add", id: newId(), evento: CONFIG.evento, nome: nome, cognome: cognome,
            biglietti: String(biglietti), ospiti: altri });
     $("ok").textContent = "Registrato: " + nome + " " + cognome + " (" + biglietti + (biglietti === 1 ? " biglietto)" : " biglietti)");
@@ -239,6 +252,11 @@ input[aria-invalid=true] { border-color:var(--err); }
   });
 
   $("aggiorna").addEventListener("click", load);
+  $("azzera").addEventListener("click", function () {
+    if (!confirm("Azzerare il conto di questa pagina? Le righe già sul foglio restano dove sono.")) return;
+    var f = totaleFoglio();
+    conto = { reg: 0, bigl: 0, bReg: f.reg, bBigl: f.bigl }; salvaConto(); conta();
+  });
   window.addEventListener("focus", load);
 
   disegnaOspiti(); conta(); load();
