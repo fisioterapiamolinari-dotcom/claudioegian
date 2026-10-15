@@ -30,6 +30,16 @@
     font-size: 1.05rem;
     line-height: 1.6;
   }
+  /* Sfondo: la locandina, fissa dietro a tutto, con un velo scuro per far leggere i testi */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(180deg, rgba(28, 13, 14, .78) 0%, rgba(28, 13, 14, .88) 100%),
+      url("copertina.jpg") center top / cover no-repeat;
+  }
   a { color: inherit; }
   :focus-visible { outline: 3px solid var(--ottone); outline-offset: 3px; }
 
@@ -39,10 +49,7 @@
   .hero {
     position: relative;
     overflow: hidden;
-    background:
-      radial-gradient(ellipse 38% 70% at 78% 8%, rgba(255, 226, 160, .38), transparent 70%),
-      linear-gradient(180deg, rgba(28, 13, 14, .15) 0%, rgba(28, 13, 14, .55) 70%, var(--palco) 100%),
-      repeating-linear-gradient(90deg, #5c0d12 0, #8a1a20 38px, #6b1015 62px, #4a0a0e 96px);
+    background: radial-gradient(ellipse 38% 70% at 78% 8%, rgba(255, 226, 160, .22), transparent 70%);
     padding: clamp(3.5rem, 9vw, 7rem) 0 clamp(4rem, 9vw, 7rem);
   }
   .hero .wrap {
@@ -85,6 +92,14 @@
     transition: transform .15s ease, background .15s ease;
   }
   .bottone:hover { background: #f0be5c; transform: translateY(-2px); }
+  .azioni { display: flex; flex-wrap: wrap; gap: .8rem; }
+  .bottone.secondario {
+    background: transparent;
+    color: var(--crema);
+    border: 2px solid var(--ottone);
+    padding: calc(.8rem - 2px) calc(1.6rem - 2px);
+  }
+  .bottone.secondario:hover { background: rgba(224, 168, 62, .18); }
 
   /* Unico momento animato: il faro si accende */
   @keyframes accendi {
@@ -114,7 +129,7 @@
   }
 
   /* Come funziona: due tempi + durata */
-  .serata { background: var(--velluto-scuro); }
+  .serata { background: rgba(59, 10, 13, .82); }
   .tempi {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -178,7 +193,7 @@
   }
 
   /* Chi siamo */
-  .noi { background: var(--velluto-scuro); }
+  .noi { background: rgba(59, 10, 13, .82); }
   .noi p { max-width: 36rem; margin: 0 0 1rem; }
 
   footer {
@@ -210,7 +225,10 @@
     <div>
       <h1>Stand-up<span>&amp; improv</span></h1>
       <p class="sotto">Prima ci prendiamo il microfono noi. Poi ve lo prendete voi (con le vostre idee, non con le mani). Serate a Roma, risate di qualità variabile ma sempre sincere.</p>
-      <a class="bottone" href="#eventi">Vedi le prossime date</a>
+      <div class="azioni">
+        <a class="bottone" href="#eventi">Vedi le prossime date</a>
+        <a class="bottone secondario" href="qr-code.html">Se ti piace il nostro spettacolo clicca qui</a>
+      </div>
     </div>
     <div class="microfono" aria-hidden="true">
       <svg viewBox="0 0 200 420" xmlns="http://www.w3.org/2000/svg">
