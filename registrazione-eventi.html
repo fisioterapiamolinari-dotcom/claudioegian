@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Stand-Up &amp; Impro – Registrazione eventi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Karla:wght@400;500;700&display=swap">
+<style>
+/* Stesso stile classico del sito: velluto rosso, ottone e crema */
+:root {
+  --bg:#1c0d0e; --surface:#3b0a0d; --velluto:#7a1217; --field:#1c0d0e; --ink:#f6ecdf; --muted:#cdbba8; --line:#9a5a58;
+  --accent:#e0a83e; --on-accent:#1c0d0e; --ring:#f0be5c; --err:#ff9c8f; --ok:#6fd3a6;
+  --font-display:"Abril Fatface","Rockwell",Georgia,serif;
+  --font-body:"Karla",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:dark;
+}
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--ink); font:400 17px/1.45 var(--font-body);
+  padding:20px max(16px,env(safe-area-inset-right)) 40px max(16px,env(safe-area-inset-left)); }
+body::before { content:""; position:fixed; inset:0; z-index:-1;
+  background:radial-gradient(ellipse 60% 40% at 80% 0%,rgba(255,226,160,.18),transparent 70%),
+             linear-gradient(180deg,#2a1012 0%,#1c0d0e 100%); }
+.wrap { max-width:860px; margin:0 auto; }
+.wordmark { font:400 1.4rem var(--font-display); color:var(--accent); padding:6px 0; }
+h1 { margin:10px 0 6px; font:400 clamp(2.2rem,7vw,3.2rem)/1.05 var(--font-display); letter-spacing:-.01em; }
+.lede { margin:0 0 20px; color:var(--muted); }
+.panel { background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:20px; margin-bottom:18px; }
+h2 { margin:0 0 14px; font:400 1.6rem/1.1 var(--font-display); }
+label.l { display:block; font-weight:700; margin:0 0 6px; }
+input[type=text], select { width:100%; height:52px; padding:0 14px; font:500 1.05rem var(--font-body); color:var(--ink);
+  background:var(--field); border:2px solid var(--line); border-radius:12px; }
+input::placeholder { color:var(--muted); opacity:.8; }
+input:focus-visible, select:focus-visible, button:focus-visible, a.btn:focus-visible { outline:3px solid var(--ring); outline-offset:2px; }
+.grid { display:grid; gap:12px; grid-template-columns:1fr 1fr; }
+.grid .full { grid-column:1 / -1; }
+@media (max-width:560px){ .grid { grid-template-columns:1fr; } }
+.stepper { display:flex; align-items:center; gap:10px; }
+.stepper button { width:52px; height:52px; border-radius:12px; border:2px solid var(--line); background:var(--field); color:var(--ink); font:700 1.5rem var(--font-body); cursor:pointer; }
+.stepper output { min-width:44px; text-align:center; font:400 1.8rem var(--font-display); }
+.btn { display:inline-flex; align-items:center; justify-content:center; min-height:52px; padding:0 24px; border:0; border-radius:999px; cursor:pointer;
+  background:var(--accent); color:var(--on-accent); font:400 1.2rem var(--font-display); text-decoration:none; }
+.btn:hover { background:#f0be5c; }
+.btn.full { width:100%; min-height:60px; font-size:1.35rem; border-radius:14px; }
+.btn.ghost { background:transparent; color:var(--ink); border:2px solid var(--line); font:700 .95rem var(--font-body); min-height:44px; padding:0 18px; }
+.btn.ghost:hover { background:rgba(224,168,62,.15); border-color:var(--accent); }
+.err { color:var(--err); font-weight:600; margin:10px 0 0; }
+.err:empty { display:none; }
+
+.stato { display:flex; gap:8px; align-items:center; color:var(--muted); font-size:.92rem; margin-bottom:14px; }
+.dot { width:10px; height:10px; border-radius:50%; background:var(--ok); flex:none; }
+.dot.warn { background:var(--accent); }
+.dot.bad { background:var(--err); }
+
+.toolbar { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px; }
+@media (max-width:560px){ .toolbar { grid-template-columns:1fr; } }
+.conti { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:16px; }
+.conto { background:var(--field); border:1px solid var(--line); border-radius:12px; padding:10px 12px; text-align:center; }
+.conto b { display:block; font:400 1.9rem/1.1 var(--font-display); color:var(--accent); }
+.conto span { font-size:.85rem; color:var(--muted); }
+
+.lista { display:grid; gap:10px; }
+.riga { display:grid; grid-template-columns:auto 1fr auto auto; gap:14px; align-items:center; padding:12px 14px;
+  background:var(--velluto); border-radius:12px; border-left:8px solid var(--line); }
+.riga.venuto { border-left-color:var(--accent); background:#5a0f13; }
+.riga input[type=checkbox] { width:32px; height:32px; accent-color:var(--accent); cursor:pointer; margin:0; }
+.riga .chi { font-weight:700; font-size:1.1rem; overflow-wrap:anywhere; }
+.riga .chi small { display:block; font-weight:400; color:var(--muted); font-size:.9rem; }
+.riga .bigl { font:400 1.5rem var(--font-display); text-align:center; line-height:1; }
+.riga .bigl small { display:block; font:400 .7rem var(--font-body); color:var(--muted); margin-top:2px; }
+.riga .x { background:none; border:0; color:var(--muted); font-size:1.3rem; cursor:pointer; padding:6px 8px; border-radius:8px; }
+.riga .x:hover { color:var(--err); }
+.vuoto { padding:22px; border:2px dashed var(--line); border-radius:12px; color:var(--muted); text-align:center; }
+.azioni { display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+@media (prefers-reduced-motion: reduce) { * { transition:none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="wordmark">Stand-Up &amp; Impro</div>
+  <h1>Registrazione eventi</h1>
+  <p class="lede">Chi si iscrive, quanti biglietti si porta dietro e chi si è davvero presentato. Tutto finisce sul tuo Google Fogli.</p>
+
+  <div class="stato" id="stato"><span class="dot warn" id="dot"></span><span id="statoTxt">Collegamento al foglio…</span></div>
+
+  <section class="panel" aria-labelledby="t-nuova">
+    <h2 id="t-nuova">Nuova registrazione</h2>
+    <form id="f" novalidate>
+      <div class="grid">
+        <div class="full">
+          <label class="l" for="evento">Evento</label>
+          <input id="evento" type="text" list="eventiNoti" maxlength="80" autocomplete="off" placeholder="Es. Open mic 22 ottobre">
+          <datalist id="eventiNoti"></datalist>
+        </div>
+        <div>
+          <label class="l" for="nome">Nome</label>
+          <input id="nome" type="text" maxlength="60" autocomplete="off" autocapitalize="words">
+        </div>
+        <div>
+          <label class="l" for="cognome">Cognome</label>
+          <input id="cognome" type="text" maxlength="60" autocomplete="off" autocapitalize="words">
+        </div>
+        <div class="full">
+          <span class="l" id="l-bigl">Quanti biglietti</span>
+          <div class="stepper" role="group" aria-labelledby="l-bigl">
+            <button type="button" id="meno" aria-label="Un biglietto in meno">−</button>
+            <output id="bigl" aria-live="polite">1</output>
+            <button type="button" id="piu" aria-label="Un biglietto in più">+</button>
+          </div>
+        </div>
+      </div>
+      <p class="err" id="errore" role="alert"></p>
+      <div style="margin-top:16px"><button class="btn full" type="submit">Registra</button></div>
+    </form>
+  </section>
+
+  <section class="panel" aria-labelledby="t-elenco">
+    <h2 id="t-elenco">Elenco</h2>
+    <div class="toolbar">
+      <div><label class="l" for="filtroEvento">Evento</label>
+        <select id="filtroEvento"><option value="">Tutti gli eventi</option></select></div>
+      <div><label class="l" for="cerca">Cerca</label>
+        <input id="cerca" type="text" autocomplete="off" placeholder="Nome o cognome"></div>
+    </div>
+    <div class="conti">
+      <div class="conto"><b id="cPers">0</b><span>registrazioni</span></div>
+      <div class="conto"><b id="cBigl">0</b><span>biglietti</span></div>
+      <div class="conto"><b id="cVenuti">0</b><span>biglietti venuti</span></div>
+    </div>
+    <div class="lista" id="lista"></div>
+    <div class="azioni">
+      <button class="btn ghost" type="button" id="aggiorna">Aggiorna</button>
+      <button class="btn ghost" type="button" id="scarica">Scarica CSV</button>
+      <a class="btn ghost" id="apriFogli" target="_blank" rel="noopener">Apri Google Fogli</a>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ============ DA COMPLETARE ============ */
+  var CONFIG = {
+    // URL dell'app web di Google Apps Script (finisce con /exec). Vedi istruzioni in registrazione-eventi-script.gs
+    scriptUrl: "",
+    // Stessa parola messa in CHIAVE dentro lo script
+    chiave: "CAMBIA-QUESTA-CHIAVE",
+    // Il tuo foglio
+    fogliUrl: "https://docs.google.com/spreadsheets/d/1v0zSIia5EeMW3fxB3Xo3KQdi2qrifOtkNT-VHy_vH4I/edit?gid=0#gid=0"
+  };
+  /* ======================================= */
+
+  var $ = function (id) { return document.getElementById(id); };
+  var rows = [], busy = 0, chain = Promise.resolve(), biglietti = 1;
+  var LAST = "sui_ultimo_evento";
+
+  $("apriFogli").href = CONFIG.fogliUrl;
+
+  function stato(tipo, txt) {
+    $("dot").className = "dot" + (tipo ? " " + tipo : "");
+    $("statoTxt").textContent = txt;
+  }
+  function el(tag, cls, txt) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (txt != null) e.textContent = txt;
+    return e;
+  }
+  function newId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+
+  /* ---------- rete ---------- */
+  function load() {
+    if (!CONFIG.scriptUrl) { stato("warn", "Non ancora collegato: incolla l'URL dello script in scriptUrl."); return Promise.resolve(); }
+    if (busy) return Promise.resolve();
+    return fetch(CONFIG.scriptUrl + "?key=" + encodeURIComponent(CONFIG.chiave) + "&t=" + Date.now())
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (!j.ok) throw new Error(j.error === "chiave" ? "La chiave non coincide con quella dello script." : "Risposta non valida.");
+        rows = j.rows; render();
+        stato("", "Collegato a Google Fogli · " + new Date().toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" }));
+      })
+      .catch(function (e) { stato("bad", "Non riesco a leggere il foglio: " + e.message); });
+  }
+  function send(p) {
+    if (!CONFIG.scriptUrl) { stato("warn", "Salvato solo qui, non sul foglio: manca scriptUrl."); return; }
+    busy++;
+    p.key = CONFIG.chiave;
+    chain = chain.then(function () {
+      var body = new URLSearchParams();
+      Object.keys(p).forEach(function (k) { body.append(k, p[k]); });
+      return fetch(CONFIG.scriptUrl, { method: "POST", mode: "no-cors", body: body });
+    }).catch(function () { stato("bad", "Invio al foglio non riuscito. Controlla la connessione e premi Aggiorna."); })
+      .then(function () { busy--; if (!busy) setTimeout(load, 900); });
+  }
+
+  /* ---------- disegno ---------- */
+  function filtrate() {
+    var ev = $("filtroEvento").value, q = $("cerca").value.trim().toLowerCase();
+    return rows.filter(function (r) {
+      if (ev && r.evento !== ev) return false;
+      if (q && (r.nome + " " + r.cognome).toLowerCase().indexOf(q) < 0) return false;
+      return true;
+    }).sort(function (a, b) {
+      return (a.cognome + " " + a.nome).localeCompare(b.cognome + " " + b.nome, "it");
+    });
+  }
+  function aggiornaEventi() {
+    var set = {}; rows.forEach(function (r) { if (r.evento) set[r.evento] = 1; });
+    var nomi = Object.keys(set).sort();
+    var cur = $("filtroEvento").value;
+    var sel = $("filtroEvento"); sel.textContent = "";
+    var o = el("option", "", "Tutti gli eventi"); o.value = ""; sel.appendChild(o);
+    nomi.forEach(function (n) { var x = el("option", "", n); x.value = n; sel.appendChild(x); });
+    sel.value = nomi.indexOf(cur) >= 0 ? cur : "";
+    var dl = $("eventiNoti"); dl.textContent = "";
+    nomi.forEach(function (n) { var x = el("option"); x.value = n; dl.appendChild(x); });
+  }
+  function render() {
+    aggiornaEventi();
+    var lista = $("lista"); lista.textContent = "";
+    var vis = filtrate(), bt = 0, bv = 0;
+    vis.forEach(function (r) {
+      bt += r.biglietti; if (r.venuto) bv += r.biglietti;
+      var riga = el("div", "riga" + (r.venuto ? " venuto" : ""));
+      var cb = el("input"); cb.type = "checkbox"; cb.checked = r.venuto;
+      cb.setAttribute("aria-label", r.nome + " " + r.cognome + " è venuto");
+      cb.addEventListener("change", function () {
+        r.venuto = cb.checked; render();
+        send({ action: "toggle", id: r.id, venuto: String(r.venuto) });
+      });
+      riga.appendChild(cb);
+      var chi = el("div", "chi", r.nome + " " + r.cognome);
+      chi.appendChild(el("small", "", r.evento || "Senza evento"));
+      riga.appendChild(chi);
+      var b = el("div", "bigl", String(r.biglietti)); b.appendChild(el("small", "", r.biglietti === 1 ? "biglietto" : "biglietti"));
+      riga.appendChild(b);
+      var x = el("button", "x", "✕"); x.type = "button"; x.setAttribute("aria-label", "Elimina " + r.nome + " " + r.cognome);
+      x.addEventListener("click", function () {
+        if (!confirm("Eliminare " + r.nome + " " + r.cognome + " dal foglio?")) return;
+        rows = rows.filter(function (y) { return y.id !== r.id; }); render();
+        send({ action: "delete", id: r.id });
+      });
+      riga.appendChild(x);
+      lista.appendChild(riga);
+    });
+    if (!vis.length) lista.appendChild(el("div", "vuoto", rows.length ? "Nessuno corrisponde alla ricerca." : "Ancora nessuno. Il palco è libero, la lista pure."));
+    $("cPers").textContent = vis.length; $("cBigl").textContent = bt; $("cVenuti").textContent = bv;
+  }
+
+  /* ---------- form ---------- */
+  function setBigl(n) { biglietti = Math.min(20, Math.max(1, n)); $("bigl").textContent = biglietti; }
+  $("meno").addEventListener("click", function () { setBigl(biglietti - 1); });
+  $("piu").addEventListener("click", function () { setBigl(biglietti + 1); });
+  try { $("evento").value = localStorage.getItem(LAST) || ""; } catch (e) {}
+
+  $("f").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var ev = $("evento").value.trim(), nome = $("nome").value.trim(), cognome = $("cognome").value.trim();
+    if (!ev || !nome || !cognome) {
+      $("errore").textContent = "Servono evento, nome e cognome. Anche «Mario Rossi» va bene.";
+      (!ev ? $("evento") : !nome ? $("nome") : $("cognome")).focus();
+      return;
+    }
+    $("errore").textContent = "";
+    try { localStorage.setItem(LAST, ev); } catch (x) {}
+    var r = { id: newId(), registrato: new Date().toISOString(), evento: ev, nome: nome, cognome: cognome, biglietti: biglietti, venuto: false };
+    rows.push(r); render();
+    send({ action: "add", id: r.id, evento: ev, nome: nome, cognome: cognome, biglietti: String(biglietti), venuto: "false" });
+    $("nome").value = ""; $("cognome").value = ""; setBigl(1); $("nome").focus();
+  });
+
+  $("filtroEvento").addEventListener("change", render);
+  $("cerca").addEventListener("input", render);
+  $("aggiorna").addEventListener("click", load);
+  window.addEventListener("focus", load);
+
+  /* ---------- CSV ---------- */
+  function cella(v) { v = String(v); return /[",\n;]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+  $("scarica").addEventListener("click", function () {
+    var righe = [["Evento", "Nome", "Cognome", "Biglietti", "Venuto"]];
+    filtrate().forEach(function (r) { righe.push([r.evento, r.nome, r.cognome, r.biglietti, r.venuto ? "SI" : "NO"]); });
+    var csv = "﻿" + righe.map(function (r) { return r.map(cella).join(","); }).join("\r\n");
+    var a = el("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    var ev = $("filtroEvento").value;
+    a.download = "registrazione-eventi" + (ev ? "-" + ev.replace(/[^\w\-]+/g, "_") : "") + ".csv";
+    document.body.appendChild(a); a.click(); a.remove();
+  });
+
+  render(); load();
+})();
+</script>
+</body>
+</html>
