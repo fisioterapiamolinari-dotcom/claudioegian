@@ -306,28 +306,19 @@
   //    - pagamento: solo per eventi a pagamento (come si paga). Lascia "" se gratis.
   //    - regole: le regole di quella serata/locale. Lascia "" se non servono.
   //    - formUrl: facoltativo. Se un evento ha un suo form, mettilo qui; altrimenti usa LINK_FORM.
-  //    I due eventi qui sotto sono SOLO segnaposto: sostituiscili o cancellali.
+  //    Finché la lista è vuota, il sito mostra "Coming soon...".
+  //    Quando hai una data vera, togli le due barre e riempi l'esempio qui sotto:
   var EVENTI = [
-    {
-      titolo: "Nome evento (segnaposto gratuito)",
-      data: "Data da definire",
-      ora: "Ora da definire",
-      luogo: "Locale da definire, Roma",
-      prezzo: "Gratis",
-      pagamento: "",
-      regole: "",
-      formUrl: ""
-    },
-    {
-      titolo: "Nome evento (segnaposto a pagamento)",
-      data: "Data da definire",
-      ora: "Ora da definire",
-      luogo: "Locale da definire, Roma",
-      prezzo: "Prezzo da definire",
-      pagamento: "Come si paga: da definire",
-      regole: "",
-      formUrl: ""
-    }
+    // {
+    //   titolo: "Nome evento",
+    //   data: "Gio 22 ottobre",
+    //   ora: "Ore 20:00",
+    //   luogo: "Nome locale, Roma",
+    //   prezzo: "Gratis",
+    //   pagamento: "",
+    //   regole: "",
+    //   formUrl: ""
+    // }
   ];
 
   /* ===================================================== */
@@ -342,7 +333,7 @@
   var lista = document.getElementById("lista-eventi");
 
   if (!EVENTI.length) {
-    lista.appendChild(el("div", "vuoto", "Nessuna data in programma al momento. Stiamo cercando un palco che ci regga. Torna a trovarci presto."));
+    lista.appendChild(el("div", "vuoto", "Coming soon..."));
   }
 
   EVENTI.forEach(function (ev) {
