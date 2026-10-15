@@ -1,1 +1,326 @@
-CIAOOOOO
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Stand-Up &amp; Impro – Il tuo panino preferito</title>
+<meta name="description" content="Stand-Up &amp; Impro a Roma. Dicci il tuo panino preferito. Poi ti chiediamo un'altra cosa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root {
+  --bg:#F6F3FA; --surface:#FFFFFF; --field:#FFFFFF; --ink:#231A31; --muted:#5E526C; --line:#D8CFE4;
+  --accent:#FFB627; --on-accent:#231A31; --accent-text:#7A4E00; --ring:#5A3FC0; --err:#B3261E; --ok:#0F7A58;
+  --spot:rgba(255,182,39,.28);
+  --font-display:"Bricolage Grotesque","Arial Black",system-ui,sans-serif;
+  --font-body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#171021; --surface:#231933; --field:#1C1329; --ink:#F5EFFB; --muted:#B9ACCB; --line:#3D3050;
+    --accent-text:#FFC857; --ring:#BBA6FF; --err:#FF9288; --ok:#4FD8A8; --spot:rgba(255,182,39,.16); color-scheme:dark; }
+}
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--ink); font:400 18px/1.45 var(--font-body);
+  padding:20px max(16px,env(safe-area-inset-right)) 32px max(16px,env(safe-area-inset-left)); }
+.stage { position:relative; max-width:640px; margin:0 auto; isolation:isolate; }
+.stage::before { content:""; position:absolute; inset:-60px -40px auto -40px; height:440px; z-index:-1; pointer-events:none;
+  background:radial-gradient(60% 100% at 18% 0%,var(--spot),transparent 70%); }
+.wordmark { font:800 1.05rem var(--font-display); letter-spacing:.14em; text-transform:uppercase; padding:8px 0; }
+h1 { margin:16px 0 8px; font:800 clamp(2.2rem,8vw,3.4rem)/1 var(--font-display); letter-spacing:-.02em; text-wrap:balance; }
+.lede { margin:0 0 22px; color:var(--muted); font-size:1.1rem; }
+.panel { background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:22px; display:grid; gap:18px; }
+.step { animation:rise .35s ease both; }
+@keyframes rise { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+@media (prefers-reduced-motion: reduce) { .step { animation:none; } }
+label.l, legend { display:block; font-weight:700; font-size:1.05rem; margin:0 0 8px; padding:0; }
+fieldset { border:0; margin:0; padding:0; min-width:0; }
+.field { min-width:0; }
+input[type=text], input[type=email], input[type=tel] { width:100%; height:60px; padding:0 16px; font:500 1.2rem var(--font-body);
+  color:var(--ink); background:var(--field); border:2px solid var(--line); border-radius:14px; }
+input::placeholder { color:var(--muted); opacity:.8; }
+input:focus-visible, .btn:focus-visible, .linkbtn:focus-visible { outline:3px solid var(--ring); outline-offset:2px; border-color:var(--ring); }
+input[aria-invalid=true] { border-color:var(--err); }
+.row2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media (max-width:520px){ .row2 { grid-template-columns:1fr; } }
+.err { color:var(--err); font-weight:600; font-size:.95rem; margin:6px 0 0; }
+.err:empty { display:none; }
+.btn { min-height:64px; padding:0 36px; border:0; border-radius:16px; cursor:pointer; background:var(--accent); color:var(--on-accent);
+  font:800 1.3rem var(--font-display); width:100%; }
+.btn[disabled] { opacity:.6; cursor:default; }
+.btn.ghost { background:transparent; color:var(--ink); border:2px solid var(--line); min-height:52px; font:700 1.05rem var(--font-body); }
+.chips { display:flex; gap:10px; flex-wrap:wrap; }
+.chip { position:relative; display:inline-block; }
+.chip input { position:absolute; inset:0; width:100%; height:100%; margin:0; opacity:0; cursor:pointer; }
+.chip span { display:inline-flex; align-items:center; min-height:52px; padding:0 26px; border-radius:999px; border:2px solid var(--line);
+  background:var(--field); font-size:1.1rem; font-weight:500; }
+.chip input:checked + span { background:var(--accent); border-color:var(--accent); color:var(--on-accent); font-weight:700; }
+.chip input:focus-visible + span { outline:3px solid var(--ring); outline-offset:2px; }
+.check { display:flex; gap:14px; align-items:flex-start; cursor:pointer; }
+.check input { flex:none; width:28px; height:28px; margin:1px 0 0; accent-color:var(--accent); }
+.linkbtn { background:none; border:0; padding:0; font:inherit; color:var(--accent-text); text-decoration:underline; cursor:pointer; }
+.joke { font:800 clamp(1.5rem,5vw,2rem)/1.15 var(--font-display); margin:0; text-wrap:balance; }
+.joke small { display:block; margin-top:8px; font:400 1.05rem var(--font-body); color:var(--muted); }
+.quote { margin:0; padding:12px 16px; border-left:4px solid var(--accent); background:var(--field); border-radius:0 12px 12px 0; color:var(--muted); }
+.hp { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+.formerr { margin:0; color:var(--err); font-weight:600; }
+.status { margin-top:20px; display:flex; gap:8px; align-items:center; color:var(--muted); font-size:.9rem; }
+.dot { width:10px; height:10px; border-radius:50%; background:var(--ok); flex:none; }
+.dot.warn { background:var(--accent); }
+.sheet { position:fixed; inset:0; z-index:10; background:rgba(10,6,16,.62); display:grid; place-items:center; padding:16px; }
+.sheet[hidden] { display:none; }
+.sheet-card { background:var(--surface); border:1px solid var(--line); border-radius:22px; width:100%; max-width:640px; max-height:100%; overflow:auto; padding:24px; display:grid; gap:12px; }
+.sheet-card h2 { margin:0; font:800 1.5rem/1.1 var(--font-display); }
+.sheet-card h3 { margin:6px 0 0; font:700 1rem var(--font-body); }
+.sheet-card p { margin:0; font-size:1rem; }
+</style>
+</head>
+<body>
+<main class="stage">
+  <div class="wordmark">Stand-Up &amp; Impro</div>
+
+  <!-- STEP 1: il panino -->
+  <section id="s1" class="step">
+    <h1>Qual è il tuo panino preferito?</h1>
+    <p class="lede">Domanda seria. Rispondi con calma, nessuno ti giudica (un po' sì).</p>
+    <form id="f1" class="panel" novalidate>
+      <div class="field">
+        <label class="l" for="panino">Il tuo panino preferito</label>
+        <input id="panino" type="text" maxlength="120" autocomplete="off" enterkeyhint="send" placeholder="Es. porchetta e crema di carciofi" aria-describedby="e-panino">
+        <p class="err" id="e-panino"></p>
+      </div>
+      <button class="btn" type="submit">Invia</button>
+    </form>
+  </section>
+
+  <!-- STEP 2: la battuta + form contatti -->
+  <section id="s2" class="step" hidden>
+    <p class="joke">Ho scritto che… in realtà non ci interessa il tuo panino preferito.
+      <small>Ci interessa di più questo.</small></p>
+    <p class="quote" id="paninoEcho" style="margin-top:16px"></p>
+    <form id="f2" class="panel" style="margin-top:16px" novalidate>
+      <div class="row2">
+        <div class="field"><label class="l" for="nome">Nome</label>
+          <input id="nome" type="text" maxlength="60" autocomplete="given-name" autocapitalize="words" enterkeyhint="next" aria-describedby="e-nome">
+          <p class="err" id="e-nome"></p></div>
+        <div class="field"><label class="l" for="cognome">Cognome</label>
+          <input id="cognome" type="text" maxlength="60" autocomplete="family-name" autocapitalize="words" enterkeyhint="next" aria-describedby="e-cognome">
+          <p class="err" id="e-cognome"></p></div>
+      </div>
+      <div class="field"><label class="l" for="email">Email</label>
+        <input id="email" type="email" inputmode="email" maxlength="120" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="nome@esempio.it" aria-describedby="e-email">
+        <p class="err" id="e-email"></p></div>
+
+      <div>
+        <label class="check">
+          <input type="checkbox" id="privacy" aria-describedby="e-privacy">
+          <span>Ho letto e accetto l'<button type="button" class="linkbtn" id="openPrivacy">informativa privacy</button>.</span>
+        </label>
+        <p class="err" id="e-privacy"></p>
+      </div>
+
+      <fieldset>
+        <legend>Vuoi entrare nel canale WhatsApp community di Stand-Up &amp; Impro?</legend>
+        <div class="chips" role="radiogroup">
+          <label class="chip"><input type="radio" name="wa" value="si"><span>Sì</span></label>
+          <label class="chip"><input type="radio" name="wa" value="no"><span>No</span></label>
+        </div>
+        <p class="err" id="e-wa"></p>
+      </fieldset>
+
+      <!-- campo che appare solo se WhatsApp = Sì -->
+      <div class="field" id="telWrap" hidden>
+        <label class="l" for="tel">Il tuo numero di telefono</label>
+        <input id="tel" type="tel" inputmode="tel" maxlength="20" autocomplete="tel" placeholder="+39 333 1234567" aria-describedby="e-tel">
+        <p class="err" id="e-tel"></p>
+      </div>
+
+      <div class="hp" aria-hidden="true"><label>Non compilare<input type="text" id="sito" tabindex="-1" autocomplete="off"></label></div>
+
+      <p class="formerr" id="formErr" role="alert"></p>
+      <button class="btn" type="submit" id="send">Registrami</button>
+    </form>
+  </section>
+
+  <!-- STEP 3: fine -->
+  <section id="s3" class="step" hidden aria-live="polite">
+    <h1>Fatto, <span id="doneName"></span>.</h1>
+    <p class="lede" id="doneMsg"></p>
+    <a class="btn" id="waLink" href="#" hidden style="display:none;text-align:center;text-decoration:none;line-height:64px;">Entra nella community</a>
+  </section>
+
+  <div class="status" id="statusLine" hidden><span class="dot" id="dot"></span><span id="statusText"></span></div>
+</main>
+
+<div class="sheet" id="privacySheet" role="dialog" aria-modal="true" aria-labelledby="privTitle" hidden>
+  <div class="sheet-card">
+    <h2 id="privTitle">Informativa privacy</h2>
+    <div id="privBody" style="display:grid;gap:10px"></div>
+    <button class="btn ghost" type="button" id="privClose">Chiudi</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ================= DA COMPLETARE ================= */
+  var CONFIG = {
+    // URL dell'app web di Google Apps Script (vedi istruzioni in "Google Fogli - script.gs")
+    sheetsUrl: "",
+    // Link di invito alla community WhatsApp (facoltativo: se vuoto non compare il pulsante finale)
+    whatsappUrl: "",
+    titolare: "Claudio Riolino e Gianmarco Molinari",
+    contattoPrivacy: "[EMAIL PER LA PRIVACY]",
+    conservazione: "24 mesi",
+    privacyVersion: "2026-10-15"
+  };
+  /* ================================================ */
+
+  var $ = function (id) { return document.getElementById(id); };
+  var data = { panino: "" };
+
+  function setErr(id, msg, el) {
+    $(id).textContent = msg || "";
+    if (el) { if (msg) el.setAttribute("aria-invalid", "true"); else el.removeAttribute("aria-invalid"); }
+  }
+  function show(id) { ["s1", "s2", "s3"].forEach(function (s) { $(s).hidden = (s !== id); }); window.scrollTo(0, 0); }
+
+  /* ---- Step 1 ---- */
+  $("panino").addEventListener("input", function () { setErr("e-panino", "", $("panino")); });
+  $("f1").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = $("panino").value.trim();
+    if (!v) { setErr("e-panino", "Scrivi qualcosa, anche «pane e salame».", $("panino")); $("panino").focus(); return; }
+    data.panino = v;
+    $("paninoEcho").textContent = "Il tuo panino: " + v + ". Bel panino. Ma non è questo il punto.";
+    show("s2");
+    $("nome").focus({ preventScroll: true });
+  });
+
+  /* ---- Step 2 ---- */
+  ["nome", "cognome", "email", "tel"].forEach(function (id) {
+    $(id).addEventListener("input", function () { setErr("e-" + id, "", $(id)); });
+  });
+  $("privacy").addEventListener("change", function () { setErr("e-privacy", ""); });
+  function wa() { var r = document.querySelector('input[name="wa"]:checked'); return r ? r.value : ""; }
+  document.querySelectorAll('input[name="wa"]').forEach(function (r) {
+    r.addEventListener("change", function () {
+      setErr("e-wa", "");
+      var yes = wa() === "si";
+      $("telWrap").hidden = !yes;
+      if (yes) $("tel").focus({ preventScroll: false }); else { $("tel").value = ""; setErr("e-tel", "", $("tel")); }
+    });
+  });
+
+  function validate() {
+    var first = null;
+    function bad(id, msg, el, mark) { setErr(id, msg, mark ? el : null); if (!first) first = el; }
+    var nome = $("nome").value.trim(), cognome = $("cognome").value.trim(), email = $("email").value.trim().toLowerCase();
+    var tel = $("tel").value.trim();
+    ["nome", "cognome", "email", "tel"].forEach(function (id) { setErr("e-" + id, "", $(id)); });
+    setErr("e-privacy", ""); setErr("e-wa", "");
+
+    if (!nome) bad("e-nome", "Scrivi il tuo nome.", $("nome"), true);
+    if (!cognome) bad("e-cognome", "Scrivi il tuo cognome.", $("cognome"), true);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) bad("e-email", "Controlla l'email: manca la @ o il dominio.", $("email"), true);
+    if (!$("privacy").checked) bad("e-privacy", "Senza privacy policy non possiamo registrarti: spunta la casella.", $("privacy"), false);
+    if (!wa()) bad("e-wa", "Scegli Sì o No.", document.querySelector('input[name="wa"]'), false);
+    if (wa() === "si") {
+      var digits = tel.replace(/\D/g, "");
+      if (!/^[+\d][\d\s().\-]*$/.test(tel) || digits.length < 8 || digits.length > 15)
+        bad("e-tel", "Controlla il numero: servono da 8 a 15 cifre.", $("tel"), true);
+    }
+    if (first) return { first: first };
+    return { nome: nome, cognome: cognome, email: email, tel: wa() === "si" ? tel : "" };
+  }
+
+  /* ---- Invio a Google Fogli (con coda se offline) ---- */
+  var KEY = "sui_panino_pending_v1", pending = [], sending = false;
+  try { pending = JSON.parse(localStorage.getItem(KEY) || "[]"); if (!Array.isArray(pending)) pending = []; } catch (e) { pending = []; }
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(pending)); } catch (e) {} }
+
+  function setStatus() {
+    var line = $("statusLine");
+    if (!CONFIG.sheetsUrl) { line.hidden = false; $("dot").className = "dot warn"; $("statusText").textContent = "Google Fogli non collegato" + (pending.length ? ": " + pending.length + " in attesa" : ""); return; }
+    if (pending.length) { line.hidden = false; $("dot").className = "dot warn"; $("statusText").textContent = pending.length + " registrazioni in attesa di invio"; }
+    else line.hidden = true;
+  }
+
+  function post(item) {
+    var body = new URLSearchParams();
+    Object.keys(item).forEach(function (k) { body.append(k, item[k]); });
+    // no-cors: richiesta "semplice" verso Apps Script, la risposta non è leggibile ma l'invio va a buon fine
+    return fetch(CONFIG.sheetsUrl, { method: "POST", mode: "no-cors", body: body });
+  }
+  async function flush() {
+    if (!CONFIG.sheetsUrl || sending || !pending.length) { setStatus(); return; }
+    sending = true;
+    try {
+      while (pending.length) { await post(pending[0]); pending.shift(); persist(); }
+    } catch (e) { /* riproverà */ }
+    sending = false; setStatus();
+  }
+  setInterval(flush, 30000);
+  window.addEventListener("online", flush);
+  setStatus(); flush();
+
+  $("f2").addEventListener("submit", function (e) {
+    e.preventDefault();
+    if ($("sito").value) { show("s3"); return; } // trappola anti-bot
+    var r = validate();
+    if (r.first) {
+      $("formErr").textContent = "Manca ancora qualcosa: guarda i messaggi in rosso.";
+      try { r.first.focus(); } catch (x) {}
+      return;
+    }
+    $("formErr").textContent = "";
+    $("send").disabled = true;
+    pending.push({
+      inviato: new Date().toISOString(), panino: data.panino,
+      nome: r.nome, cognome: r.cognome, email: r.email,
+      privacy: "si (" + CONFIG.privacyVersion + ")",
+      whatsapp: wa(), telefono: r.tel
+    });
+    persist(); setStatus(); flush();
+
+    $("doneName").textContent = r.nome;
+    $("doneMsg").textContent = wa() === "si"
+      ? "Sei registrato e ti aggiungiamo alla community WhatsApp. Il panino resta tuo, noi ci teniamo il numero."
+      : "Sei registrato. Niente WhatsApp, quindi niente messaggi alle 7 di mattina. Il panino resta comunque nostro argomento di discussione.";
+    var link = $("waLink");
+    if (wa() === "si" && CONFIG.whatsappUrl) { link.href = CONFIG.whatsappUrl; link.hidden = false; link.style.display = "block"; }
+    else { link.hidden = true; link.style.display = "none"; }
+    show("s3");
+  });
+
+  /* ---- Informativa ---- */
+  function p(t) { var e = document.createElement("p"); e.textContent = t; return e; }
+  function h3(t) { var e = document.createElement("h3"); e.textContent = t; return e; }
+  (function () {
+    var b = $("privBody");
+    b.appendChild(p("Informativa ai sensi dell'art. 13 del Regolamento UE 2016/679 (GDPR) per chi si registra tramite questa pagina."));
+    b.appendChild(h3("1. Chi tratta i tuoi dati"));
+    b.appendChild(p("Titolari del trattamento sono " + CONFIG.titolare + ", che organizzano gli eventi Stand-Up & Impro a Roma. Per ogni richiesta scrivi a " + CONFIG.contattoPrivacy + "."));
+    b.appendChild(h3("2. Quali dati raccogliamo"));
+    b.appendChild(p("Nome, cognome, email, la risposta alla domanda sul panino preferito e, solo se scegli di entrare nella community WhatsApp, il tuo numero di telefono."));
+    b.appendChild(h3("3. Perché e su quale base"));
+    b.appendChild(p("a) Registrarti e contattarti per gli eventi. Base: il nostro legittimo interesse a organizzarli (art. 6.1.f GDPR)."));
+    b.appendChild(p("b) Aggiungerti al canale WhatsApp community e scriverti lì date e novità. Base: il tuo consenso (art. 6.1.a GDPR), facoltativo: se rispondi «No» non usiamo il tuo numero. Puoi uscire dalla community quando vuoi o revocare il consenso scrivendoci."));
+    b.appendChild(h3("4. Con chi li condividiamo"));
+    b.appendChild(p("Non diffondiamo i tuoi dati. Li archiviamo in un foglio Google Fogli su Google Drive, quindi Google tratta i dati per nostro conto come fornitore di servizi. Se sei nella community WhatsApp, gli altri partecipanti possono vedere il tuo numero secondo le impostazioni di WhatsApp."));
+    b.appendChild(h3("5. Per quanto tempo"));
+    b.appendChild(p("Per " + CONFIG.conservazione + " dall'ultimo contatto con te, poi cancelliamo o rendiamo anonimi i dati."));
+    b.appendChild(h3("6. I tuoi diritti"));
+    b.appendChild(p("Puoi chiedere di accedere ai dati, correggerli, cancellarli, limitarne il trattamento, opporti e riceverli in formato portabile scrivendo a " + CONFIG.contattoPrivacy + ". Puoi presentare reclamo al Garante per la protezione dei dati personali (garanteprivacy.it)."));
+  })();
+  $("openPrivacy").addEventListener("click", function () { $("privacySheet").hidden = false; $("privClose").focus(); });
+  function closePriv() { $("privacySheet").hidden = true; }
+  $("privClose").addEventListener("click", closePriv);
+  $("privacySheet").addEventListener("click", function (e) { if (e.target === $("privacySheet")) closePriv(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closePriv(); });
+})();
+</script>
+</body>
+</html>
+
